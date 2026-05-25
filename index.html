@@ -836,11 +836,11 @@ function getRadioVal(name) {
 
 // Data packaging and submissions
 async function submitForm() {
-  const url = getVal('gsUrl') || 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec'; // Set URL here or use hidden field
+  const url = getVal('gsUrl') || 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec'; // Set URL here or use hidden field
   const statusEl = document.getElementById('submitStatus');
 
   // ถ้าไม่ได้กำหนด URL ให้แสดง error เฉพาะกรณี placeholder ยังอยู่
-  if(!url || url === 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec') {
+  if(!url || url === 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec') {
     statusEl.innerHTML = '<span style="color:red;">⚠️ กรุณาติดต่อผู้ดูแลระบบ (ยังไม่ได้ตั้งค่า URL)</span>';
     return;
   }
@@ -1007,7 +1007,7 @@ async function submitForm() {
 async function loadDashboardData() {
   const url = document.getElementById('gsUrl').value || '';
   const tbody = document.getElementById('dbTableBody');
-  if (!url || url === 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec') {
+  if (!url || url === 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec') {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">ยังไม่ได้ตั้งค่า URL Web App (ติดต่อผู้ดูแลระบบ)</td></tr>';
     return;
   }
@@ -1235,7 +1235,7 @@ async function saveEditedData() {
 
   // Send update to GS (if rowIndex available)
   const url = getVal('gsUrl');
-  if(url && url !== 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec' && item.rowIndex) {
+  if(url && url !== 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec' && item.rowIndex) {
     try {
       await fetch(url, {
         method: 'POST',
