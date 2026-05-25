@@ -6,6 +6,7 @@
 <title>แบบบันทึกบริบทโรงเรียนปลายทางเพื่อการพัฒนา DLTV</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root { 
@@ -17,11 +18,11 @@
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
-* { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+* { box-sizing: border-box; font-family: 'Sarabun', system-ui, -apple-system, sans-serif; }
 body { background: #f8fafc; margin: 0; padding: 0; color: #1e293b; }
 .form-wrap { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
 
-.mode-container { display: flex; justify(content: center; gap: 10px; margin-bottom: 1.5rem; }
+.mode-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 1.5rem; }
 .btn-mode { padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 30px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; color: #475569; }
 .btn-mode.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: var(--shadow-md); }
 
@@ -67,24 +68,7 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 .btn-control { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 .btn-back { background: #fff; color: #475569; border: 1px solid #cbd5e1; }
 .btn-next { background: var(--accent); color: #fff; border: none; margin-left: auto; }
-
-/* 🌟 ปุ่มบันทึกส่งข้อมูลเวอร์ชันปรับปรุงใหม่ */
-#submitBtn { 
-  background: #22c55e; 
-  color: #fff; 
-  border: none; 
-  margin-left: auto; 
-  font-size: 15px;
-  padding: 12px 28px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-  transition: all 0.2s ease;
-}
-#submitBtn:hover {
-  background: #16a34a;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
-}
+#submitBtn { background: #16a34a; color: #fff; border: none; margin-left: auto; }
 
 /* Dashboard & PDF CSS Summary */
 .search-box { display: flex; gap: 10px; margin-bottom: 1.5rem; }
@@ -94,6 +78,43 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 .db-table th, .db-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 13.5px; }
 .db-table th { background: #f1f5f9; color: #334155; font-weight: 600; }
 .btn-pdf { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 6px 12px; border-radius: 4px; font-size: 12.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.btn-preview { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; padding: 6px 12px; border-radius: 4px; font-size: 12.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.btn-edit-row { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; padding: 6px 12px; border-radius: 4px; font-size: 12.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+
+/* Success Popup */
+.success-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; }
+.success-overlay.show { display:flex; }
+.success-modal { background:#fff; border-radius:20px; padding:2.5rem 2rem; max-width:460px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.35s ease; }
+@keyframes popIn { from { transform:scale(0.7); opacity:0; } to { transform:scale(1); opacity:1; } }
+.success-modal .check-circle { width:80px; height:80px; background:linear-gradient(135deg,#16a34a,#22c55e); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-size:40px; }
+.success-modal h2 { font-size:20px; color:#15803d; margin:0 0 8px; }
+.success-modal p { color:#64748b; font-size:14px; margin:0 0 1.5rem; line-height:1.6; }
+.btn-dashboard-link { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:700; font-size:15px; border:none; cursor:pointer; }
+.btn-close-popup { background:#f1f5f9; color:#64748b; border:none; padding:10px 20px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:12px; width:100%; }
+
+/* Preview/Edit Modal */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:8888; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto; }
+.modal-overlay.show { display:flex; }
+.modal-box { background:#fff; border-radius:16px; width:100%; max-width:860px; margin:auto; box-shadow:0 20px 60px rgba(0,0,0,0.25); overflow:hidden; }
+.modal-header { background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+.modal-header h3 { margin:0; font-size:16px; }
+.btn-modal-close { background:rgba(255,255,255,0.2); border:none; color:#fff; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
+.modal-body { padding:1.5rem; max-height:70vh; overflow-y:auto; }
+.preview-section { margin-bottom:1.25rem; }
+.preview-section h4 { font-size:14px; font-weight:600; color:var(--accent); background:var(--accent-light); padding:6px 12px; border-radius:6px; margin:0 0 10px; }
+.preview-row { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+.preview-item { font-size:13px; } 
+.preview-item .label { color:#64748b; font-size:12px; } 
+.preview-item .value { font-weight:600; color:#1e293b; }
+.modal-footer { padding:1rem 1.5rem; border-top:1px solid #e2e8f0; display:flex; gap:10px; justify-content:flex-end; background:#f8fafc; }
+.btn-modal-edit { background:var(--accent); color:#fff; border:none; padding:10px 22px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+.btn-modal-pdf { background:#16a34a; color:#fff; border:none; padding:10px 22px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+
+/* Edit form inside modal */
+.edit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.edit-grid .field-full { grid-column:1/-1; }
+.edit-field label { font-size:12px; color:#64748b; display:block; margin-bottom:4px; font-weight:500; }
+.edit-field input, .edit-field textarea { width:100%; font-size:13px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:6px; }
 
 #pdf-print-area { display: none; background: white; color: black; padding: 30px; font-size: 14px; line-height: 1.6; }
 #pdf-print-area h2 { text-align: center; font-size: 16px; margin-bottom: 5px; }
@@ -112,39 +133,6 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 .summary-list ul { list-style: none; padding-left: 0; margin: 0; }
 .summary-list li { padding: 6px 0; border-bottom: 1px solid #eef2ff; display: flex; justify-content: space-between; font-size: 13.5px; }
 .summary-badge { background: var(--accent-light); color: var(--accent); border-radius: 20px; padding: 2px 8px; font-size: 12px; font-weight: bold; }
-
-/* 🌟 CSS หน้าต่างแจ้งเตือนสำเร็จ (Success Modal Popup) */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-}
-.modal-card {
-  background: #ffffff;
-  padding: 2.5rem;
-  border-radius: 16px;
-  max-width: 480px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-  animation: modalScale 0.3s ease-out;
-}
-@keyframes modalScale {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.modal-icon { font-size: 58px; color: #22c55e; margin-bottom: 1rem; display: inline-block; }
-.modal-card h2 { margin: 0 0 10px; font-size: 22px; color: #1e293b; font-weight: 700; }
-.modal-card p { margin: 0 0 24px; font-size: 14.5px; color: #64748b; line-height: 1.6; }
-.modal-actions { display: flex; gap: 12px; justify-content: center; }
-.btn-modal-close { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; }
-.btn-modal-dash { background: var(--accent); color: #fff; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2); }
-.btn-modal-dash:hover { background: var(--accent-hover); }
 </style>
 </head>
 <body>
@@ -584,9 +572,14 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
         <div class="field"><label>วันที่ลงนาม (ผู้รับข้อมูล)</label><input type="date" id="sig2_date" style="width:200px;"></div>
       </div>
 
+      <!-- Hidden GS URL - hardcoded by admin, not visible to users -->
+      <input type="hidden" id="gsUrl" value="">
+
       <div class="action-controls">
         <button type="button" class="btn-control btn-back" onclick="prevTab()"><i class="ti ti-arrow-left"></i> ก่อนหน้า</button>
-        <button type="button" id="submitBtn" onclick="submitForm()"><i class="ti ti-device-floppy"></i> บันทึกและส่งข้อมูลเข้าระบบ</button>
+        <button type="button" id="submitBtn" onclick="submitForm()" style="padding:14px 32px; font-size:16px; border-radius:10px; background:linear-gradient(135deg,#16a34a,#15803d); color:#fff; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:10px; box-shadow:0 4px 15px rgba(22,163,74,0.4); font-weight:700; letter-spacing:0.3px;">
+          <i class="ti ti-send" style="font-size:20px;"></i> ✅ บันทึกและส่งข้อมูลเข้าระบบ
+        </button>
       </div>
       <div id="submitStatus" style="margin-top:15px; text-align:right; font-weight:600; font-size:14px;"></div>
     </div>
@@ -623,26 +616,42 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
             <th>รหัสโรงเรียน</th>
             <th>จังหวัด</th>
             <th>ผู้ให้ข้อมูล</th>
-            <th>สถานะส่งข้อมูล</th>
+            <th>สถานะ</th>
             <th style="text-align:center;">เครื่องมือ</th>
           </tr>
         </thead>
         <tbody id="dbTableBody">
-          <tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">กำลังรอการเชื่อมต่อคลังข้อมูลหลัก...</td></tr>
+          <tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">โปรดใส่ URL Web App และกดปุ่มดึงข้อมูลล่าสุด</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
 
-<div id="successModal" class="modal-overlay">
-  <div class="modal-card">
-    <i class="ti ti-circle-check-filled modal-icon"></i>
-    <h2>บันทึกข้อมูลสำเร็จเรียบร้อย!</h2>
-    <p>ข้อมูลบริบทของโรงเรียนได้รับการจัดเก็บลงในระบบคลังข้อมูล Google Sheets เรียบร้อยแล้ว คุณสามารถปิดหน้าต่างนี้ หรือกดไปตรวจเช็กรายชื่อและพิมพ์เอกสาร PDF ได้ที่หน้าแดชบอร์ด</p>
-    <div class="modal-actions">
-      <button class="btn-modal-close" onclick="closeModal()">ปิดหน้าต่างนี้</button>
-      <button class="btn-modal-dash" onclick="goToDashboardFromModal()"><i class="ti ti-chart-bar"></i> ไปยังหน้าแดชบอร์ด</button>
+<!-- ===== SUCCESS POPUP ===== -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-modal">
+    <div class="check-circle">✓</div>
+    <h2>บันทึกข้อมูลสำเร็จ!</h2>
+    <p>ข้อมูลของโรงเรียน <strong id="successSchoolName"></strong><br>ถูกส่งเข้าระบบ Google Sheets เรียบร้อยแล้ว</p>
+    <button class="btn-dashboard-link" onclick="closeSuccessPopup(); switchMode('dashboard')">
+      <i class="ti ti-chart-bar"></i> ไปยัง Dashboard ติดตามผล
+    </button>
+    <button class="btn-close-popup" onclick="closeSuccessPopup()">ปิด</button>
+  </div>
+</div>
+
+<!-- ===== PREVIEW / EDIT MODAL ===== -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="previewModalTitle">📋 รายละเอียดข้อมูลบริบทโรงเรียน</h3>
+      <button class="btn-modal-close" onclick="closePreviewModal()">×</button>
+    </div>
+    <div class="modal-body" id="previewModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-modal-pdf" onclick="downloadFromPreview()"><i class="ti ti-file-text"></i> ออก PDF</button>
+      <button class="btn-modal-edit" onclick="showEditMode()"><i class="ti ti-pencil"></i> แก้ไขข้อมูล</button>
     </div>
   </div>
 </div>
@@ -751,9 +760,6 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 </div>
 
 <script>
-// ⚠️ [สำคัญมาก]: วาง URL ของ Google Apps Script Web App (ที่ลงท้ายด้วย /exec) ของคุณแทนที่ข้อความด้านล่างนี้ได้เลยครับ!
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec";
-
 let currentTabIdx = 0;
 const totalTabs = 6;
 let allResponsesData = [];
@@ -794,6 +800,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <td><input type="text" class="hw-note" data-grade="${g}"></td>
       </tr>`;
   });
+
+  // (GS URL is now hardcoded in the hidden field — no localStorage needed)
 });
 
 function showTab(idx) {
@@ -826,24 +834,18 @@ function getRadioVal(name) {
   return el ? el.value : '';
 }
 
-// Control Modal Popup Functions
-function closeModal() {
-  document.getElementById('successModal').style.display = 'none';
-}
-function goToDashboardFromModal() {
-  closeModal();
-  switchMode('dashboard');
-}
-
 // Data packaging and submissions
 async function submitForm() {
-  if(GOOGLE_APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec" || !GOOGLE_APPS_SCRIPT_URL) {
-    alert("ระบบไม่พบ URL สำหรับเชื่อมต่อฐานข้อมูล กรุณาเปิดไฟล์โค้ดแก้ไขตัวแปร GOOGLE_APPS_SCRIPT_URL ที่บรรทัดแรกในแท็กสคริปต์ก่อนนะครับ");
+  const url = getVal('gsUrl') || 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec'; // Set URL here or use hidden field
+  const statusEl = document.getElementById('submitStatus');
+
+  // ถ้าไม่ได้กำหนด URL ให้แสดง error เฉพาะกรณี placeholder ยังอยู่
+  if(!url || url === 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec') {
+    statusEl.innerHTML = '<span style="color:red;">⚠️ กรุณาติดต่อผู้ดูแลระบบ (ยังไม่ได้ตั้งค่า URL)</span>';
     return;
   }
-  
-  const statusEl = document.getElementById('submitStatus');
-  statusEl.innerHTML = '<span style="color:#f59e0b;"><i class="ti ti-loader animate-spin"></i> กำลังอัปโหลดข้อมูลบริบทขึ้นคลังระบบ Google Sheets โปรดรอสักครู่...</span>';
+
+  statusEl.innerHTML = '<span style="color:orange;"><i class="ti ti-loader animate-spin"></i> กำลังส่งข้อมูลไปยัง Google Sheets โปรดรอสักครู่...</span>';
 
   // Extract complex matrices
   let majorArr = [];
@@ -985,47 +987,52 @@ async function submitForm() {
   };
 
   try {
-    await fetch(GOOGLE_APPS_SCRIPT_URL, {
+    await fetch(url, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    statusEl.innerHTML = '<span style="color:#22c55e;"><i class="ti ti-circle-check"></i> ส่งข้อมูลสำเร็จแล้ว!</span>';
-    
-    // 🌟 แสดงหน้าต่าง Popup แจ้งเตือนเสร็จสมบูรณ์กลางจอแทนแบบเดิม
-    document.getElementById('successModal').style.display = 'flex';
+    statusEl.innerHTML = '<span style="color:green;"><i class="ti ti-circle-check"></i> ส่งบันทึกข้อมูลสำเร็จเรียบร้อยแล้ว!</span>';
+    // Show success popup
+    const schoolName = getVal('sch_name') || 'โรงเรียนปลายทาง';
+    document.getElementById('successSchoolName').textContent = schoolName;
+    document.getElementById('successOverlay').classList.add('show');
   } catch (e) {
-    statusEl.innerHTML = '<span style="color:#ef4444;">❌ เกิดข้อผิดพลาดในระบบ: ' + e.message + '</span>';
+    statusEl.innerHTML = '<span style="color:red;">❌ เกิดข้อผิดพลาด: ' + e.message + '</span>';
   }
 }
 
 // Fetch dashboard dataset
 async function loadDashboardData() {
-  if (GOOGLE_APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec" || !GOOGLE_APPS_SCRIPT_URL) return;
+  const url = document.getElementById('gsUrl').value || '';
   const tbody = document.getElementById('dbTableBody');
+  if (!url || url === 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec') {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">ยังไม่ได้ตั้งค่า URL Web App (ติดต่อผู้ดูแลระบบ)</td></tr>';
+    return;
+  }
 
-  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;"><i class="ti ti-loader animate-spin"></i> กำลังโหลดชุดข้อมูลและวิเคราะห์สถิติจากคลัง Google Sheets...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;"><i class="ti ti-loader animate-spin"></i> กำลังโหลดชุดข้อมูลจากระบบฐานข้อมูล Sheets...</td></tr>';
   
   try {
-    const rRead = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=read`);
+    const rRead = await fetch(`${url}?action=read`);
     allResponsesData = await rRead.json();
     
     renderDashboardTable(allResponsesData);
 
-    const rSummary = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=summary`);
+    const rSummary = await fetch(`${url}?action=summary`);
     const summary = await rSummary.json();
     renderSummaryCards(summary);
   } catch (err) {
     console.error(err);
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#ef4444;">❌ ดึงข้อมูลประวัติไม่สำเร็จ กรุณาตรวจสอบการตั้งค่า Deploy และสิทธิ์การเข้าถึงแบบทุกคนของ Web App อีกครั้ง</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red;">❌ ดึงข้อมูลไม่สำเร็จ ตรวจสอบสิทธิ์การแชร์หรือความถูกต้องของ URL Web App อีกครั้ง</td></tr>';
   }
 }
 
 function renderDashboardTable(data) {
   const tbody = document.getElementById('dbTableBody');
   if(!data || data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:#64748b;">ไม่พบข้อมูลประวัติในฐานข้อมูลระบบขณะนี้</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:#64748b;">ไม่มีข้อมูลประวัติในฐานข้อมูล</td></tr>';
     return;
   }
   tbody.innerHTML = '';
@@ -1033,13 +1040,19 @@ function renderDashboardTable(data) {
     tbody.innerHTML += `
       <tr>
         <td>${item.ผู้ให้ข้อมูล_วันที่บันทึก || item.timestamp || '-'}</td>
-        <td style="font-weight:600; color:var(--accent);">${item.ชื่อโรงเรียน || '-'}</td>
+        <td>
+          <a href="#" style="font-weight:600; color:var(--accent); text-decoration:none;" onclick="openPreviewModal(${index}); return false;">
+            ${item.ชื่อโรงเรียน || '-'}
+          </a>
+        </td>
         <td><code>${item.รหัสโรงเรียน || '-'}</code></td>
         <td>${item.จังหวัด || '-'}</td>
         <td>${item.ผู้ให้ข้อมูล_ชื่อ || '-'}<br><small style="color:#64748b;">(${item.ผู้ให้ข้อมูล_สถานะ || '-'})</small></td>
-        <td><span style="color:#16a34a; font-weight:600;">✓ สมบูรณ์</span></td>
-        <td style="text-align:center;">
-          <button class="btn-pdf" onclick="downloadSinglePDF(${index})"><i class="ti ti-file-text"></i> ออกไฟล์ PDF</button>
+        <td><span style="background:#dcfce7;color:#166534;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;">✓ สมบูรณ์</span></td>
+        <td style="text-align:center; white-space:nowrap;">
+          <button class="btn-preview" onclick="openPreviewModal(${index})"><i class="ti ti-eye"></i> พรีวิว</button>
+          <button class="btn-edit-row" style="margin-left:4px;" onclick="openEditModal(${index})"><i class="ti ti-pencil"></i> แก้ไข</button>
+          <button class="btn-pdf" style="margin-left:4px;" onclick="downloadSinglePDF(${index})"><i class="ti ti-file-text"></i> PDF</button>
         </td>
       </tr>`;
   });
@@ -1086,7 +1099,170 @@ function renderSummaryCards(summary) {
   }
 }
 
-// PDF Building & Printing Engine
+// ===== POPUP & PREVIEW FUNCTIONS =====
+function closeSuccessPopup() {
+  document.getElementById('successOverlay').classList.remove('show');
+}
+
+let currentPreviewIndex = -1;
+
+function openPreviewModal(index) {
+  currentPreviewIndex = index;
+  const item = allResponsesData[index];
+  if(!item) return;
+
+  document.getElementById('previewModalTitle').textContent = `📋 ${item.ชื่อโรงเรียน || 'โรงเรียนปลายทาง'}`;
+
+  const body = document.getElementById('previewModalBody');
+  body.innerHTML = `
+    <div class="preview-section">
+      <h4>📍 ข้อมูลทั่วไป</h4>
+      <div class="preview-row">
+        <div class="preview-item"><div class="label">ชื่อโรงเรียน</div><div class="value">${item.ชื่อโรงเรียน||'-'}</div></div>
+        <div class="preview-item"><div class="label">รหัสโรงเรียน</div><div class="value">${item.รหัสโรงเรียน||'-'}</div></div>
+        <div class="preview-item"><div class="label">จังหวัด</div><div class="value">${item.จังหวัด||'-'}</div></div>
+        <div class="preview-item"><div class="label">อำเภอ</div><div class="value">${item.อำเภอ||'-'}</div></div>
+        <div class="preview-item"><div class="label">สพท.</div><div class="value">${item.สำนักงานเขตพื้นที่||'-'}</div></div>
+        <div class="preview-item"><div class="label">ประเภทโรงเรียน</div><div class="value">${item.ประเภทโรงเรียน_รวม||'-'}</div></div>
+      </div>
+    </div>
+    <div class="preview-section">
+      <h4>👤 ผู้ให้ข้อมูล</h4>
+      <div class="preview-row">
+        <div class="preview-item"><div class="label">ชื่อ</div><div class="value">${item.ผู้ให้ข้อมูล_ชื่อ||'-'}</div></div>
+        <div class="preview-item"><div class="label">ตำแหน่ง</div><div class="value">${item.ผู้ให้ข้อมูล_ตำแหน่ง||'-'}</div></div>
+        <div class="preview-item"><div class="label">สถานะ</div><div class="value">${item.ผู้ให้ข้อมูล_สถานะ||'-'}</div></div>
+        <div class="preview-item"><div class="label">วันที่</div><div class="value">${item.ผู้ให้ข้อมูล_วันที่บันทึก||'-'}</div></div>
+      </div>
+    </div>
+    <div class="preview-section">
+      <h4>👥 บุคลากร</h4>
+      <div class="preview-row">
+        <div class="preview-item"><div class="label">ผอ./ครูใหญ่</div><div class="value">${item.ผอ_ครูใหญ่||'-'}</div></div>
+        <div class="preview-item"><div class="label">ครูทั้งหมด</div><div class="value">${item.จำนวนครูทั้งหมด||'0'} คน</div></div>
+        <div class="preview-item"><div class="label">ครูอัตราจ้าง</div><div class="value">${item.จำนวนครูอัตราจ้าง||'0'} คน</div></div>
+      </div>
+    </div>
+    <div class="preview-section">
+      <h4>📺 การใช้ DLTV</h4>
+      <div class="preview-row">
+        <div class="preview-item" style="width:100%;"><div class="label">ภาพรวมการใช้</div><div class="value">${item.ภาพรวมการใช้_รวม||'-'}</div></div>
+        <div class="preview-item" style="width:100%;"><div class="label">ช่องทางรับชม</div><div class="value">${item.ช่องทางรับชม_รวม||'-'}</div></div>
+      </div>
+    </div>
+    <div class="preview-section">
+      <h4>📝 สรุปบริบทสำคัญ</h4>
+      <div style="font-size:13px; line-height:1.7; color:#1e293b;">
+        <p><strong>บริบทสำคัญ:</strong> ${(item.S8_บริบทสำคัญ||'-').replace(/\n/g,'<br>')}</p>
+        <p><strong>ข้อจำกัด:</strong> ${(item.S8_ข้อจำกัดการเรียน||'-').replace(/\n/g,'<br>')}</p>
+        <p><strong>ข้อควรคำนึง:</strong> ${(item.S8_ข้อควรคำนึงถึง||'-').replace(/\n/g,'<br>')}</p>
+        <p><strong>ข้อเสนอแนะ:</strong> ${(item.S8_ข้อเสนอแนะเบื้องต้น||'-').replace(/\n/g,'<br>')}</p>
+      </div>
+    </div>
+  `;
+
+  // hide edit form if any
+  document.getElementById('previewModal').dataset.mode = 'preview';
+  document.querySelector('.modal-footer').innerHTML = `
+    <button class="btn-modal-pdf" onclick="downloadFromPreview()"><i class="ti ti-file-text"></i> ออก PDF</button>
+    <button class="btn-modal-edit" onclick="showEditMode()"><i class="ti ti-pencil"></i> แก้ไขข้อมูล</button>
+  `;
+
+  document.getElementById('previewModal').classList.add('show');
+}
+
+function closePreviewModal() {
+  document.getElementById('previewModal').classList.remove('show');
+  currentPreviewIndex = -1;
+}
+
+function downloadFromPreview() {
+  if(currentPreviewIndex >= 0) downloadSinglePDF(currentPreviewIndex);
+}
+
+function showEditMode() {
+  if(currentPreviewIndex < 0) return;
+  const item = allResponsesData[currentPreviewIndex];
+  const body = document.getElementById('previewModalBody');
+  document.getElementById('previewModalTitle').textContent = `✏️ แก้ไขข้อมูล: ${item.ชื่อโรงเรียน||''}`;
+
+  body.innerHTML = `
+    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#92400e;">
+      <strong>⚠️ หมายเหตุ:</strong> การแก้ไขนี้จะอัปเดตข้อมูลในระบบผ่าน Google Sheets โปรดตรวจสอบก่อนบันทึก
+    </div>
+    <div class="edit-grid">
+      <div class="edit-field field-full"><label>ชื่อโรงเรียน</label><input type="text" id="edit_sch_name" value="${item.ชื่อโรงเรียน||''}"></div>
+      <div class="edit-field"><label>รหัสโรงเรียน</label><input type="text" id="edit_sch_code" value="${item.รหัสโรงเรียน||''}"></div>
+      <div class="edit-field"><label>จังหวัด</label><input type="text" id="edit_province" value="${item.จังหวัด||''}"></div>
+      <div class="edit-field"><label>อำเภอ</label><input type="text" id="edit_amphoe" value="${item.อำเภอ||''}"></div>
+      <div class="edit-field"><label>สำนักงานเขตพื้นที่</label><input type="text" id="edit_area" value="${item.สำนักงานเขตพื้นที่||''}"></div>
+      <div class="edit-field"><label>ชื่อผู้ให้ข้อมูล</label><input type="text" id="edit_inf_name" value="${item.ผู้ให้ข้อมูล_ชื่อ||''}"></div>
+      <div class="edit-field"><label>ตำแหน่งผู้ให้ข้อมูล</label><input type="text" id="edit_inf_pos" value="${item.ผู้ให้ข้อมูล_ตำแหน่ง||''}"></div>
+      <div class="edit-field field-full"><label>บริบทสำคัญของโรงเรียน</label><textarea id="edit_s8_1" rows="3">${item.S8_บริบทสำคัญ||''}</textarea></div>
+      <div class="edit-field field-full"><label>ข้อจำกัดสำคัญ</label><textarea id="edit_s8_2" rows="3">${item.S8_ข้อจำกัดการเรียน||''}</textarea></div>
+      <div class="edit-field field-full"><label>สิ่งที่ครูต้นทางควรคำนึงถึง</label><textarea id="edit_s8_3" rows="3">${item.S8_ข้อควรคำนึงถึง||''}</textarea></div>
+      <div class="edit-field field-full"><label>ข้อเสนอแนะเบื้องต้น</label><textarea id="edit_s8_4" rows="3">${item.S8_ข้อเสนอแนะเบื้องต้น||''}</textarea></div>
+    </div>
+  `;
+
+  document.querySelector('.modal-footer').innerHTML = `
+    <button style="background:#f1f5f9;color:#64748b;border:none;padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;" onclick="openPreviewModal(currentPreviewIndex)">ยกเลิก</button>
+    <button class="btn-modal-edit" onclick="saveEditedData()"><i class="ti ti-device-floppy"></i> บันทึกการแก้ไข</button>
+  `;
+}
+
+function openEditModal(index) {
+  openPreviewModal(index);
+  setTimeout(() => showEditMode(), 50);
+}
+
+async function saveEditedData() {
+  if(currentPreviewIndex < 0) return;
+  const item = allResponsesData[currentPreviewIndex];
+  
+  // Update local data
+  item.ชื่อโรงเรียน = document.getElementById('edit_sch_name').value;
+  item.รหัสโรงเรียน = document.getElementById('edit_sch_code').value;
+  item.จังหวัด = document.getElementById('edit_province').value;
+  item.อำเภอ = document.getElementById('edit_amphoe').value;
+  item.สำนักงานเขตพื้นที่ = document.getElementById('edit_area').value;
+  item.ผู้ให้ข้อมูล_ชื่อ = document.getElementById('edit_inf_name').value;
+  item.ผู้ให้ข้อมูล_ตำแหน่ง = document.getElementById('edit_inf_pos').value;
+  item.S8_บริบทสำคัญ = document.getElementById('edit_s8_1').value;
+  item.S8_ข้อจำกัดการเรียน = document.getElementById('edit_s8_2').value;
+  item.S8_ข้อควรคำนึงถึง = document.getElementById('edit_s8_3').value;
+  item.S8_ข้อเสนอแนะเบื้องต้น = document.getElementById('edit_s8_4').value;
+
+  // Send update to GS (if rowIndex available)
+  const url = getVal('gsUrl');
+  if(url && url !== 'https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec' && item.rowIndex) {
+    try {
+      await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'update', rowIndex: item.rowIndex, data: item })
+      });
+    } catch(e) { console.warn('Update to GS failed:', e); }
+  }
+
+  renderDashboardTable(allResponsesData);
+  closePreviewModal();
+  
+  // Show mini success notice
+  const notice = document.createElement('div');
+  notice.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#15803d;color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;z-index:9999;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+  notice.textContent = '✓ บันทึกการแก้ไขเรียบร้อยแล้ว';
+  document.body.appendChild(notice);
+  setTimeout(() => notice.remove(), 3000);
+}
+
+// Close modals on overlay click
+document.addEventListener('click', function(e) {
+  if(e.target.id === 'successOverlay') closeSuccessPopup();
+  if(e.target.id === 'previewModal') closePreviewModal();
+});
+
 function downloadSinglePDF(index) {
   const item = allResponsesData[index];
   if(!item) return;
