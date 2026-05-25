@@ -119,34 +119,54 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 .edit-field label { font-size:12px; color:#64748b; display:block; margin-bottom:4px; font-weight:500; }
 .edit-field input, .edit-field textarea { width:100%; font-size:13px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:6px; }
 
-/* PDF Print Area - Optimized for A4 and Clarity */
+/* PDF Print Area - Optimized for Browser Native Print */
 #pdf-print-area {
-  display: none; background: white; color: black; padding: 15mm 15mm;
+  display: none; background: white; color: black; padding: 10mm 15mm;
   font-family: 'Sarabun', sans-serif;
-  font-size: 14pt; line-height: 1.4; width: 210mm;
+  font-size: 12pt; line-height: 1.5; width: 100%;
 }
 #pdf-print-area * {
   font-family: 'Sarabun', sans-serif;
   box-sizing: border-box;
 }
 #pdf-print-area h2 { text-align:center; font-size:18pt; margin:0 0 5px; font-weight:bold; color: #1e3a8a; }
-#pdf-print-area h3 { text-align:center; font-size:13pt; margin:0 0 15px; font-weight:normal; color: #444; }
-.p-title { font-weight:bold; font-size:14pt; background:#f1f5f9; padding:6px 12px; margin:12px 0 8px; border-left:5px solid #1e3a8a; color: #1e3a8a; }
-.p-line { margin-bottom:5px; font-size:13pt; }
+#pdf-print-area h3 { text-align:center; font-size:12pt; margin:0 0 15px; font-weight:normal; color: #444; }
+.p-title { font-weight:bold; font-size:13pt; background:#f1f5f9; padding:6px 12px; margin:12px 0 8px; border-left:5px solid #1e3a8a; color: #1e3a8a; }
+.p-line { margin-bottom:5px; font-size:12pt; }
 .p-label { font-weight:normal; color: #475569; }
 .p-val { font-weight:bold; border-bottom:1px solid #cbd5e1; padding:0 4px; display:inline; color: #0f172a; }
-.p-block-wrap { margin-bottom:8px; font-size:13pt; }
-.p-block-label { font-weight:bold; display:block; margin-bottom: 3px; color: #1e3a8a; font-size: 13pt; }
-.p-block-val { display:block; font-weight:normal; border: 1px solid #e2e8f0; padding:8px 12px; min-height:24px; white-space:pre-wrap; word-break:break-word; background: #f8fafc; border-radius: 6px; font-size: 12pt; color: #1e293b; }
+.p-block-wrap { margin-bottom:8px; font-size:12pt; }
+.p-block-label { font-weight:bold; display:block; margin-bottom: 3px; color: #1e3a8a; font-size: 12pt; }
+.p-block-val { display:block; font-weight:normal; border: 1px solid #e2e8f0; padding:10px 14px; min-height:32px; white-space:pre-wrap; word-break:break-word; background: #f8fafc; border-radius: 6px; font-size: 11pt; color: #1e293b; line-height: 1.6; }
 .p-row2col { width:100%; border-collapse:collapse; margin-bottom:5px; }
-.p-row2col td { font-size:13pt; padding:3px 10px 3px 0; vertical-align:top; }
-.p-bullet-list { margin:3px 0 6px 20px; padding:0; font-size:13pt; }
+.p-row2col td { font-size:12pt; padding:3px 10px 3px 0; vertical-align:top; }
+.p-bullet-list { margin:3px 0 6px 20px; padding:0; font-size:12pt; }
 .p-bullet-list li { margin-bottom:3px; list-style:disc; }
-.pdf-table { width:100%; border-collapse:collapse; margin-top:8px; font-size:12pt; }
-.pdf-table th,.pdf-table td { border:1px solid #cbd5e1; padding:8px; text-align:left; vertical-align:top; word-break:break-word; }
+.pdf-table { width:100%; border-collapse:collapse; margin-top:8px; font-size:11pt; }
+.pdf-table th,.pdf-table td { border:1px solid #cbd5e1; padding:8px; text-align:left; vertical-align:top; word-break:break-word; line-height: 1.5; }
 .pdf-table th { background:#f8fafc; text-align:center; font-weight:bold; color: #1e3a8a; }
-.pdf-sig-table { width:100%; border-collapse:collapse; margin-top:35px; font-size:13pt; }
+.pdf-sig-table { width:100%; border-collapse:collapse; margin-top:35px; font-size:12pt; }
 .pdf-sig-table td { text-align:center; padding:10px; vertical-align:top; width:50%; }
+
+/* Media Print Rules */
+@media print {
+  body * { visibility: hidden; }
+  #pdf-print-area, #pdf-print-area * { visibility: visible; }
+  #pdf-print-area {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  .no-print { display: none !important; }
+}
 
 .dashboard-summary-row { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
 .summary-card { flex: 1; background: white; border-radius: 12px; padding: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); min-width: 280px; }
@@ -1274,19 +1294,17 @@ async function downloadSinglePDF(index) {
 
   const element = document.getElementById('pdf-print-area');
   element.style.display = 'block';
+  
+  // Set temporary document title for filename when saving as PDF
+  const oldTitle = document.title;
+  document.title = `DLTV_Context_${item.ชื่อโรงเรียน}`;
+  
   await document.fonts.ready;
-
-  const opt = {
-    margin: 0,
-    filename: `DLTV_Context_${item.ชื่อโรงเรียน}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-
-  html2pdf().set(opt).from(element).save().then(() => {
-    element.style.display = 'none';
-  });
+  window.print();
+  
+  // Restore title and hide area
+  document.title = oldTitle;
+  element.style.display = 'none';
 }
 </script>
 </body>
