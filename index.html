@@ -572,8 +572,7 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
         <div class="field"><label>วันที่ลงนาม (ผู้รับข้อมูล)</label><input type="date" id="sig2_date" style="width:200px;"></div>
       </div>
 
-      <!-- Hidden GS URL - hardcoded by admin, not visible to users -->
-      <input type="hidden" id="gsUrl" value="https://script.google.com/macros/s/AKfycbwn6MpBB22Q0HNG-en6IiPlsd99YzBrSFRs8J5HfUM2JXJpxgibmJ-WbiAzCIDmt8qE6g/exec">
+      <!-- GS URL is now managed in the Dashboard admin panel -->
 
       <div class="action-controls">
         <button type="button" class="btn-control btn-back" onclick="prevTab()"><i class="ti ti-arrow-left"></i> ก่อนหน้า</button>
@@ -589,6 +588,19 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
     <div class="form-header" style="background:linear-gradient(135deg, #334155, #475569)">
       <h1>📊 แดชบอร์ดติดตามผล & สรุปสถิติบริบทโรงเรียนปลายทาง</h1>
       <p>ระบบรวบรวมข้อมูล คัดกรอง ค้นหา และพิมพ์เอกสารสรุปบริบทรายโรงเรียนในรูปแบบไฟล์ PDF</p>
+    </div>
+
+    <div style="background:#f8fafc; border:1px dashed #cbd5e1; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem;">
+      <div style="font-size:13px; font-weight:600; color:#64748b; margin-bottom:8px;">⚙️ ตั้งค่าการเชื่อมต่อ Google Sheets (Admin)</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <input type="text" id="gsUrl" placeholder="วาง URL Google Apps Script Web App ที่นี่..." 
+          style="flex:1; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; font-family:'Sarabun',sans-serif;"
+          oninput="saveGsUrl(this.value)">
+        <button onclick="loadDashboardData()" style="background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:13px;white-space:nowrap;">
+          <i class="ti ti-plug"></i> เชื่อมต่อ
+        </button>
+      </div>
+      <div style="font-size:12px; color:#94a3b8; margin-top:6px;">URL นี้จะถูกบันทึกไว้ในเบราว์เซอร์นี้โดยอัตโนมัติ ไม่ต้องกรอกใหม่ทุกครั้ง</div>
     </div>
 
     <div class="dashboard-summary-row">
@@ -801,7 +813,11 @@ window.addEventListener('DOMContentLoaded', () => {
       </tr>`;
   });
 
-  // (GS URL is now hardcoded in the hidden field — no localStorage needed)
+  // (GS URL is now managed in Dashboard admin panel — saved to localStorage)
+  const savedUrl = localStorage.getItem('dl_gs_url');
+  if(savedUrl && document.getElementById('gsUrl')) {
+    document.getElementById('gsUrl').value = savedUrl;
+  }
 });
 
 function showTab(idx) {
@@ -836,12 +852,12 @@ function getRadioVal(name) {
 
 // Data packaging and submissions
 async function submitForm() {
-  const url = getVal('gsUrl') || 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec'; // Set URL here or use hidden field
+  const urlEl = document.getElementById('gsUrl');
+  const url = (urlEl ? urlEl.value.trim() : '') || localStorage.getItem('dl_gs_url') || '';
   const statusEl = document.getElementById('submitStatus');
 
-  // ถ้าไม่ได้กำหนด URL ให้แสดง error เฉพาะกรณี placeholder ยังอยู่
-  if(!url || url === 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec') {
-    statusEl.innerHTML = '<span style="color:red;">⚠️ กรุณาติดต่อผู้ดูแลระบบ (ยังไม่ได้ตั้งค่า URL)</span>';
+  if(!url) {
+    statusEl.innerHTML = '<span style="color:red;">⚠️ ยังไม่ได้ตั้งค่า URL — กรุณาไปที่ <strong>Dashboard</strong> แล้วกรอก URL Google Apps Script ก่อนครับ</span>';
     return;
   }
 
@@ -1005,10 +1021,11 @@ async function submitForm() {
 
 // Fetch dashboard dataset
 async function loadDashboardData() {
-  const url = document.getElementById('gsUrl').value || '';
+  const urlEl = document.getElementById('gsUrl');
+  const url = (urlEl ? urlEl.value.trim() : '') || localStorage.getItem('dl_gs_url') || '';
   const tbody = document.getElementById('dbTableBody');
-  if (!url || url === 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec') {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">ยังไม่ได้ตั้งค่า URL Web App (ติดต่อผู้ดูแลระบบ)</td></tr>';
+  if (!url) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b; padding:30px;">กรุณากรอก URL Google Apps Script ในช่องด้านบน แล้วกดปุ่ม "เชื่อมต่อ"</td></tr>';
     return;
   }
 
@@ -1097,6 +1114,10 @@ function renderSummaryCards(summary) {
   } catch (err) {
     console.error(err);
   }
+}
+
+function saveGsUrl(val) {
+  localStorage.setItem('dl_gs_url', val.trim());
 }
 
 // ===== POPUP & PREVIEW FUNCTIONS =====
@@ -1235,7 +1256,7 @@ async function saveEditedData() {
 
   // Send update to GS (if rowIndex available)
   const url = getVal('gsUrl');
-  if(url && url !== 'https://script.google.com/macros/s/AKfycbz1WU63qrP6KJrTNJSOajN0NUvMuteIEF0XrD-AMBGxe4Pvkl3b710nbJV9Vf0O8GjcOA/exec' && item.rowIndex) {
+  if(url && url !== 'YOUR_GS_URL_HERE' && item.rowIndex) {
     try {
       await fetch(url, {
         method: 'POST',
