@@ -1036,12 +1036,68 @@ async function loadDashboardData() {
     allResponsesData = await rRead.json();
     renderDashboardTable(allResponsesData);
     
-    const rSum = await fetch(`${GS_URL}?action=summary`);
-    const summary = await rSum.json();
+    // Calculate Summary Analytics (Client-side)
+    const summary = calculateSummaryAnalytics(allResponsesData);
     renderSummaryCards(summary);
   } catch (err) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red;">❌ ดึงข้อมูลไม่สำเร็จ ตรวจสอบสิทธิ์การแชร์</td></tr>';
   }
+}
+
+function calculateSummaryAnalytics(data) {
+  if (!data || data.length === 0) return {};
+  
+  const stats = {
+    totalSchools: data.length,
+    schoolTypes: {},
+    usageStyles: {},
+    supportNeeds: {},
+    studentContexts: {},
+    infraStatus: {
+      'ไฟฟ้า': { 'ปกติ': 0, 'ไม่เสถียร': 0, 'ไม่มี': 0 },
+      'สัญญาณ': { 'ปกติ': 0, 'ไม่เสถียร': 0, 'ไม่มี': 0 },
+      'เสียง': { 'ปกติ': 0, 'ไม่เสถียร': 0, 'ไม่มี': 0 },
+      'เน็ต': { 'ปกติ': 0, 'ไม่เสถียร': 0, 'ไม่มี': 0 }
+    }
+  };
+
+  data.forEach(item => {
+    // 1. School Types
+    if (item.ประเภทโรงเรียน_รวม) {
+      item.ประเภทโรงเรียน_รวม.split(', ').forEach(t => {
+        stats.schoolTypes[t] = (stats.schoolTypes[t] || 0) + 1;
+      });
+    }
+    // 2. Usage Styles
+    if (item.ภาพรวมการใช้_รวม) {
+      item.ภาพรวมการใช้_รวม.split(', ').forEach(u => {
+        stats.usageStyles[u] = (stats.usageStyles[u] || 0) + 1;
+      });
+    }
+    // 3. Support Needs
+    if (item.สิ่งที่โรงเรียนต้องการสนับสนุน) {
+      item.สิ่งที่โรงเรียนต้องการสนับสนุน.split(', ').forEach(s => {
+        stats.supportNeeds[s] = (stats.supportNeeds[s] || 0) + 1;
+      });
+    }
+    // 4. Student Context
+    if (item.ลักษณะผู้เรียน_รวม) {
+      item.ลักษณะผู้เรียน_รวม.split(', ').forEach(c => {
+        stats.studentContexts[c] = (stats.studentContexts[c] || 0) + 1;
+      });
+    }
+    // 5. Infra Status
+    if (item.ตารางโครงสร้างพื้นฐาน_รวม) {
+      item.ตารางโครงสร้างพื้นฐาน_รวม.split(' | ').forEach(inf => {
+        const [key, val] = inf.split(':');
+        if (stats.infraStatus[key] && stats.infraStatus[key].hasOwnProperty(val)) {
+          stats.infraStatus[key][val]++;
+        }
+      });
+    }
+  });
+
+  return stats;
 }
 
 function renderDashboardTable(data) {
@@ -1080,20 +1136,64 @@ function filterDashboardTable() {
   renderDashboardTable(filtered);
 }
 
-function renderSummaryCards(summary) {
-  const typeDiv = document.getElementById('schoolTypeSummaryList');
-  if (summary.schoolTypeSummary && summary.schoolTypeSummary.length) {
-    typeDiv.innerHTML = '<ul>' + summary.schoolTypeSummary.map(item => `<li><strong>${item.type}</strong> <span class="summary-badge">${item.count} แห่ง</span></li>`).join('') + '</ul>';
-  } else {
-    typeDiv.innerHTML = '<p>ไม่มีข้อมูลประเภทโรงเรียน</p>';
-  }
+function renderSummaryCards(stats) {
+  const dashboardHeader = document.querySelector('#dashboardModeView .dashboard-header');
   
-  const usageDiv = document.getElementById('usageSummaryList');
-  if (summary.usageSummary && summary.usageSummary.length) {
-    usageDiv.innerHTML = '<ul>' + summary.usageSummary.map(item => `<li><strong>${item.usage}</strong> <span class="summary-badge">${item.count} แห่ง</span></li>`).join('') + '</ul>';
-  } else {
-    usageDiv.innerHTML = '<p>ไม่มีข้อมูลการใช้ DLTV</p>';
+  // Create or Update Summary Container
+  let summarySection = document.getElementById('summaryAnalyticsSection');
+  if (!summarySection) {
+    summarySection = document.createElement('div');
+    summarySection.id = 'summaryAnalyticsSection';
+    summarySection.className = 'dashboard-summary-row';
+    dashboardHeader.after(summarySection);
   }
+
+  if (!stats || !stats.totalSchools) {
+    summarySection.innerHTML = '<div class="summary-card" style="text-align:center;">ยังไม่มีข้อมูลสรุป</div>';
+    return;
+  }
+
+  // Sort and Get Top Items
+  const getSortedArr = (obj) => Object.entries(obj).sort((a,b) => b[1] - a[1]);
+  
+  const typeHtml = getSortedArr(stats.schoolTypes).map(([k,v]) => `<li><span>${k}</span><span class="summary-badge">${v}</span></li>`).join('');
+  const usageHtml = getSortedArr(stats.usageStyles).map(([k,v]) => `<li><span>${k}</span><span class="summary-badge">${v}</span></li>`).join('');
+  const supportHtml = getSortedArr(stats.supportNeeds).slice(0, 5).map(([k,v]) => `<li><span>${k}</span><span class="summary-badge">${v}</span></li>`).join('');
+  
+  // Infra Summary Calculation
+  const infraHtml = Object.entries(stats.infraStatus).map(([key, vals]) => {
+    const normal = vals['ปกติ'] || 0;
+    const problem = (vals['ไม่เสถียร'] || 0) + (vals['ไม่มี'] || 0);
+    const percent = Math.round((normal / stats.totalSchools) * 100);
+    return `<li>
+      <span>${key} (ปกติ)</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:60px; height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden;">
+          <div style="width:${percent}%; height:100%; background:var(--accent);"></div>
+        </div>
+        <span style="font-size:11px; font-weight:bold;">${percent}%</span>
+      </div>
+    </li>`;
+  }).join('');
+
+  summarySection.innerHTML = `
+    <div class="summary-card">
+      <h3>🏫 ประเภทโรงเรียน (${stats.totalSchools} แห่ง)</h3>
+      <div class="summary-list"><ul>${typeHtml || '<li>ไม่มีข้อมูล</li>'}</ul></div>
+    </div>
+    <div class="summary-card">
+      <h3>📺 รูปแบบการใช้ DLTV</h3>
+      <div class="summary-list"><ul>${usageHtml || '<li>ไม่มีข้อมูล</li>'}</ul></div>
+    </div>
+    <div class="summary-card">
+      <h3>🛠️ โครงสร้างพื้นฐาน (ความพร้อม)</h3>
+      <div class="summary-list"><ul>${infraHtml}</ul></div>
+    </div>
+    <div class="summary-card">
+      <h3>🆘 5 อันดับสิ่งที่ต้องการสนับสนุน</h3>
+      <div class="summary-list"><ul>${supportHtml || '<li>ไม่มีข้อมูล</li>'}</ul></div>
+    </div>
+  `;
 }
 
 function openPreviewModal(index) {
