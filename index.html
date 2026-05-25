@@ -116,16 +116,33 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 .edit-field label { font-size:12px; color:#64748b; display:block; margin-bottom:4px; font-weight:500; }
 .edit-field input, .edit-field textarea { width:100%; font-size:13px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:6px; }
 
-#pdf-print-area { display: none; background: white; color: black; padding: 30px; font-size: 14px; line-height: 1.6; }
-#pdf-print-area h2 { text-align: center; font-size: 16px; margin-bottom: 5px; }
-#pdf-print-area h3 { text-align: center; font-size: 14px; margin-top: 0; margin-bottom: 20px; font-weight: normal; }
-.p-title { font-weight: bold; background: #f2f2f2; padding: 4px 8px; margin-top: 15px; margin-bottom: 8px; border-left: 4px solid black; }
-.p-row { margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 15px; }
-.p-val { border-bottom: 1px dotted #000; padding-left: 4px; padding-right: 4px; font-weight: bold; }
-.pdf-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
-.pdf-table th, .pdf-table td { border: 1px solid black; padding: 5px 8px; text-align: left; }
-.pdf-table th { background: #fafafa; text-align: center; }
-.pdf-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 35px; text-align: center; page-break-inside: avoid; }
+#pdf-print-area {
+  display: none; background: white; color: black; padding: 24px 28px;
+  font-family: 'TH Sarabun New','Sarabun','Leelawadee UI','Leelawadee','Tahoma',sans-serif;
+  font-size: 14pt; line-height: 1.6; width: 190mm;
+}
+#pdf-print-area * {
+  font-family: 'TH Sarabun New','Sarabun','Leelawadee UI','Leelawadee','Tahoma',sans-serif;
+  box-sizing: border-box;
+}
+#pdf-print-area h2 { text-align:center; font-size:16pt; margin:0 0 4px; font-weight:bold; }
+#pdf-print-area h3 { text-align:center; font-size:13pt; margin:0 0 16px; font-weight:normal; }
+.p-title { font-weight:bold; font-size:13pt; background:#f0f0f0; padding:3px 8px; margin:14px 0 8px; border-left:4px solid #333; }
+.p-line { margin-bottom:5px; font-size:13pt; }
+.p-label { font-weight:normal; }
+.p-val { font-weight:bold; border-bottom:1px dotted #555; padding:0 4px; display:inline; }
+.p-block-wrap { margin-bottom:8px; font-size:13pt; }
+.p-block-label { font-weight:bold; display:block; }
+.p-block-val { display:block; font-weight:bold; border-bottom:1px dotted #555; padding:2px 4px; min-height:20px; white-space:pre-wrap; word-break:break-word; }
+.p-row2col { width:100%; border-collapse:collapse; margin-bottom:5px; }
+.p-row2col td { font-size:13pt; padding:1px 10px 1px 0; vertical-align:top; }
+.p-bullet-list { margin:2px 0 5px 16px; padding:0; font-size:13pt; }
+.p-bullet-list li { margin-bottom:2px; list-style:disc; }
+.pdf-table { width:100%; border-collapse:collapse; margin-top:6px; font-size:12pt; }
+.pdf-table th,.pdf-table td { border:1px solid black; padding:4px 6px; text-align:left; vertical-align:top; word-break:break-word; }
+.pdf-table th { background:#f0f0f0; text-align:center; font-weight:bold; }
+.pdf-sig-table { width:100%; border-collapse:collapse; margin-top:28px; font-size:13pt; }
+.pdf-sig-table td { text-align:center; padding:5px; vertical-align:top; width:50%; }
 
 .dashboard-summary-row { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
 .summary-card { flex: 1; background: white; border-radius: 12px; padding: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); min-width: 280px; }
@@ -671,104 +688,152 @@ table.matrix-table input[type=text], table.matrix-table input[type=number] { pad
 <div id="pdf-print-area">
   <h2>แบบบันทึกบริบทโรงเรียนปลายทางเพื่อการพัฒนา DLTV</h2>
   <h3>โครงการจัดการเรียนรู้ด้วยการศึกษาทางไกลผ่านดาวเทียม (DLTV) ร่วมกับโรงเรียนปลายทาง</h3>
-  
+
   <div class="p-title">1. วัตถุประสงค์ของแบบบันทึก</div>
-  <p style="margin:5px 0; font-size:13px; text-indent:30px;">ข้อมูลบริบทฉบับนี้ใช้ประโยชน์เพื่อการพัฒนาการเรียนการสอนออกอากาศ DLTV และการสนับสนุนโรงเรียนปลายทางให้สอดคล้องกับสภาพจริง มิใช่การประเมินเพื่อตรวจสอบผลการทำงานของโรงเรียนแต่อย่างใด</p>
+  <div class="p-line" style="text-indent:2em;">ข้อมูลบริบทฉบับนี้ใช้ประโยชน์เพื่อการพัฒนาการเรียนการสอนออกอากาศ DLTV และการสนับสนุนโรงเรียนปลายทางให้สอดคล้องกับสภาพจริง มิใช่การประเมินเพื่อตรวจสอบผลการทำงานของโรงเรียนแต่อย่างใด</div>
 
   <div class="p-title">2. ผู้ให้ข้อมูล</div>
-  <div class="p-row">
-    <div>ผู้ให้ข้อมูลมีสถานะเป็น: <span id="p_role" class="p-val"></span></div>
-    <div>ชื่อ-นามสกุล: <span id="p_inf_name" class="p-val"></span></div>
-    <div>ตำแหน่ง: <span id="p_inf_pos" class="p-val"></span></div>
-  </div>
-  <div class="p-row">
-    <div>โทรศัพท์: <span id="p_inf_tel" class="p-val"></span></div>
-    <div>อีเมล: <span id="p_inf_email" class="p-val"></span></div>
-    <div>วันที่บันทึกข้อมูล: <span id="p_inf_date" class="p-val"></span></div>
-  </div>
+  <div class="p-line">ผู้ให้ข้อมูลมีสถานะเป็น: <span id="p_role" class="p-val"></span></div>
+  <table class="p-row2col">
+    <tr>
+      <td>ชื่อ-นามสกุล: <span id="p_inf_name" class="p-val"></span></td>
+      <td>ตำแหน่ง: <span id="p_inf_pos" class="p-val"></span></td>
+    </tr>
+    <tr>
+      <td>โทรศัพท์: <span id="p_inf_tel" class="p-val"></span></td>
+      <td>อีเมล: <span id="p_inf_email" class="p-val"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">วันที่บันทึกข้อมูล: <span id="p_inf_date" class="p-val"></span></td>
+    </tr>
+  </table>
 
   <div class="p-title">3. ข้อมูลพื้นฐานของโรงเรียน</div>
-  <div class="p-row">
-    <div>ชื่อโรงเรียน: <span id="p_sch_name" class="p-val"></span></div>
-    <div>รหัส 10 หลัก: <span id="p_sch_code" class="p-val"></span></div>
-    <div>สพท: <span id="p_sch_area" class="p-val"></span></div>
+  <table class="p-row2col">
+    <tr>
+      <td>ชื่อโรงเรียน: <span id="p_sch_name" class="p-val"></span></td>
+      <td>รหัส 10 หลัก: <span id="p_sch_code" class="p-val"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">สพท: <span id="p_sch_area" class="p-val"></span></td>
+    </tr>
+    <tr>
+      <td>ต. <span id="p_sch_t" class="p-val"></span>&nbsp;&nbsp;อ. <span id="p_sch_a" class="p-val"></span>&nbsp;&nbsp;จ. <span id="p_sch_j" class="p-val"></span></td>
+      <td>รหัสไปรษณีย์: <span id="p_sch_z" class="p-val"></span>&nbsp;&nbsp;โทรศัพท์: <span id="p_sch_tel" class="p-val"></span></td>
+    </tr>
+  </table>
+  <div class="p-line">ประเภทโรงเรียน: <span id="p_sch_types" class="p-val"></span></div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">ลักษณะการจัดชั้นเรียน:</span>
+    <span id="p_room_styles" class="p-block-val"></span>
   </div>
-  <div class="p-row">
-    <div>ที่อยู่: ต. <span id="p_sch_t" class="p-val"></span> อ. <span id="p_sch_a" class="p-val"></span> จ. <span id="p_sch_j" class="p-val"></span> รหัสไปรษณีย์: <span id="p_sch_z" class="p-val"></span></div>
-    <div>โทรศัพท์โรงเรียน: <span id="p_sch_tel" class="p-val"></span></div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">รายละเอียดข้อจำกัดห้องเรียน:</span>
+    <span id="p_room_limit" class="p-block-val"></span>
   </div>
-  <div class="p-row">
-    <div>ประเภทโรงเรียน: <span id="p_sch_types" class="p-val"></span></div>
-  </div>
-  <div class="p-row">
-    <div>ลักษณะการจัดชั้นเรียน: <span id="p_room_styles" class="p-val"></span></div>
-  </div>
-  <div style="margin-top:4px;"><strong>รายละเอียดข้อจำกัดห้องเรียน:</strong> <span id="p_room_limit" style="border-bottom:1px dotted #000; display:block; padding:3px 0;"></span></div>
-
-  <div class="p-row" style="margin-top:10px;">
-    <div>ผู้อำนวยการ/ครูใหญ่: <span id="p_has_dir" class="p-val"></span></div>
-    <div>รอง ผอ.: <span id="p_c_deputy" class="p-val"></span> คน</div>
-    <div>ครูทั้งหมด: <span id="p_c_tch" class="p-val"></span> คน</div>
-    <div>ครูอัตราจ้าง: <span id="p_c_con" class="p-val"></span> คน</div>
-    <div>ธุรการ: <span id="p_c_adm" class="p-val"></span> คน</div>
-  </div>
-
-  <div style="margin-top:10px;"><strong>สถิติจนวนครูที่ตรงวิชาเอกโดยประมาณ:</strong></div>
-  <div id="p_major_list" style="font-size:12px; padding-left:15px; font-weight:500;"></div>
+  <table class="p-row2col" style="margin-top:6px;">
+    <tr>
+      <td>ผู้อำนวยการ/ครูใหญ่: <span id="p_has_dir" class="p-val"></span></td>
+      <td>รอง ผอ.: <span id="p_c_deputy" class="p-val"></span> คน</td>
+    </tr>
+    <tr>
+      <td>ครูทั้งหมด: <span id="p_c_tch" class="p-val"></span> คน</td>
+      <td>ครูอัตราจ้าง: <span id="p_c_con" class="p-val"></span> คน&nbsp;&nbsp;ธุรการ: <span id="p_c_adm" class="p-val"></span> คน</td>
+    </tr>
+  </table>
+  <div class="p-line" style="margin-top:6px;"><strong>สถิติจำนวนครูที่ตรงวิชาเอกโดยประมาณ:</strong></div>
+  <div id="p_major_list" style="padding-left:12px;"></div>
 
   <div class="p-title">4. ข้อมูลการใช้ DLTV ด้านวิชาการ</div>
-  <div class="p-row"><div><strong>4.1 ภาพรวมการใช้งาน:</strong> <span id="p_usage_styles" class="p-val"></span></div></div>
-  
-  <div style="margin-top:6px;"><strong>4.2 ข้อมูลวิชา/กิจกรรมที่ใช้ DLTV รายชั้นเรียนประจำ:</strong></div>
-  <div id="p_academic_list" style="font-size:12px; padding-left:15px; font-weight:500;"></div>
-
-  <div class="p-row" style="margin-top:8px;"><div><strong>4.3 บทบาทครูปลายทาง:</strong> <span id="p_teacher_roles" class="p-val"></span></div></div>
-  <div class="p-row"><div><strong>4.4 การเตรียมการก่อนใช้:</strong> <span id="p_prep_styles" class="p-val"></span></div></div>
-  <div class="p-row"><div><strong>4.5 การติดตามผลหลังเรียน:</strong> <span id="p_follow_styles" class="p-val"></span></div></div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">4.1 ภาพรวมการใช้งาน:</span>
+    <span id="p_usage_styles" class="p-block-val"></span>
+  </div>
+  <div class="p-line"><strong>4.2 ข้อมูลวิชา/กิจกรรมที่ใช้ DLTV รายชั้นเรียนประจำ:</strong></div>
+  <div id="p_academic_list" style="padding-left:12px;"></div>
+  <div class="p-block-wrap" style="margin-top:6px;">
+    <span class="p-block-label">4.3 บทบาทครูปลายทาง:</span>
+    <span id="p_teacher_roles" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">4.4 การเตรียมการก่อนใช้:</span>
+    <span id="p_prep_styles" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">4.5 การติดตามผลหลังเรียน:</span>
+    <span id="p_follow_styles" class="p-block-val"></span>
+  </div>
 
   <div class="p-title">5. ข้อมูลการใช้งานด้านเทคนิคและอุปกรณ์</div>
-  <div class="p-row"><div><strong>5.1 ช่องทางการรับชมหลัก:</strong> <span id="p_watch_channels" class="p-val"></span></div></div>
-  <div style="margin-top:4px;"><strong>ข้อจำกัดความต่างแต่ละชั้น:</strong> <span id="p_watch_diff" style="border-bottom:1px dotted #000; display:block; padding:2px 0;"></span></div>
-  
-  <div style="margin-top:6px;"><strong>5.2 และ 5.3 ตารางตรวจสอบสถานะเครื่องรับทีวีและกล่อง IRD ดาวเทียม:</strong></div>
-  <div id="p_hw_list" style="font-size:11px; padding-left:15px; font-weight:500;"></div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">5.1 ช่องทางการรับชมหลัก:</span>
+    <span id="p_watch_channels" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">ข้อจำกัดความต่างแต่ละชั้น:</span>
+    <span id="p_watch_diff" class="p-block-val"></span>
+  </div>
+  <div class="p-line"><strong>5.2 และ 5.3 ตารางตรวจสอบสถานะเครื่องรับทีวีและกล่อง IRD ดาวเทียม:</strong></div>
+  <div id="p_hw_list" style="padding-left:12px;"></div>
+  <div class="p-line" style="margin-top:6px;"><strong>5.4 ประเมินผลโครงสร้างพื้นฐาน:</strong></div>
+  <div id="p_infra_list" style="padding-left:12px;"></div>
+  <div class="p-block-wrap" style="margin-top:6px;">
+    <span class="p-block-label">5.5 แนวทางซ่อมบำรุงหลังประกัน:</span>
+    <span id="p_maint_style" class="p-block-val"></span>
+  </div>
 
-  <div style="margin-top:8px;"><strong>5.4 ประเมินผลโครงสร้างพื้นฐาน:</strong></div>
-  <div id="p_infra_list" style="font-size:12px; padding-left:15px; font-weight:500;"></div>
-  
-  <div class="p-row" style="margin-top:6px;"><div><strong>5.5 แนวทางซ่อมบำรุงหลังประกัน:</strong> <span id="p_maint_style" class="p-val"></span></div></div>
-
-  <div class="p-title">6. บริบทผู้เรียนและสภาพแวดล้อมการเรียนรู้ & 7. จุดแข็ง ปัญหา และความต้องการสนับสนุน</div>
-  <div class="p-row"><div><strong>6.1 ลักษณะผู้เรียน:</strong> <span id="p_std_context" class="p-val"></span></div></div>
-  <div class="p-row"><div><strong>6.2 ปัจจัยที่เป็นข้อจำกัด:</strong> <span id="p_limit_factors" class="p-val"></span></div></div>
-  <div style="margin-top:4px;"><strong>6.3 สิ่งที่ครูต้นทางควรรับรู้เกี่ยวกับผู้เรียน:</strong> <span id="p_tch_know" style="border-bottom:1px dotted #000; display:block; padding:2px 0;"></span></div>
-  
-  <div style="margin-top:6px;"><strong>7.1 จุดแข็งของโรงเรียนในการใช้ DLTV:</strong> <span id="p_strength" style="border-bottom:1px dotted #000; display:block; padding:2px 0;"></span></div>
-  <div style="margin-top:4px;"><strong>7.2 ปัญหาหรืออุปสรรคสำคัญในการใช้ DLTV:</strong> <span id="p_problem" style="border-bottom:1px dotted #000; display:block; padding:2px 0;"></span></div>
-  <div class="p-row" style="margin-top:6px;"><div><strong>7.3 สิ่งที่โรงเรียนต้องการสนับสนุนเพิ่มเติม:</strong> <span id="p_sup_needs" class="p-val"></span></div></div>
+  <div class="p-title">6. บริบทผู้เรียนและสภาพแวดล้อมการเรียนรู้ &amp; 7. จุดแข็ง ปัญหา และความต้องการสนับสนุน</div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">6.1 ลักษณะผู้เรียน:</span>
+    <span id="p_std_context" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">6.2 ปัจจัยที่เป็นข้อจำกัด:</span>
+    <span id="p_limit_factors" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">6.3 สิ่งที่ครูต้นทางควรรับรู้เกี่ยวกับผู้เรียน:</span>
+    <span id="p_tch_know" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">7.1 จุดแข็งของโรงเรียนในการใช้ DLTV:</span>
+    <span id="p_strength" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">7.2 ปัญหาหรืออุปสรรคสำคัญในการใช้ DLTV:</span>
+    <span id="p_problem" class="p-block-val"></span>
+  </div>
+  <div class="p-block-wrap">
+    <span class="p-block-label">7.3 สิ่งที่โรงเรียนต้องการสนับสนุนเพิ่มเติม:</span>
+    <span id="p_sup_needs" class="p-block-val"></span>
+  </div>
 
   <div class="p-title">8. สรุปบริบทสำคัญสำหรับครูต้นทางและการพัฒนา DLTV</div>
   <table class="pdf-table">
-    <tr><td style="width:25%; font-weight:bold;">8.1 บริบทสำคัญของโรงเรียนที่ควรรับรู้</td><td id="p_s8_1"></td></tr>
+    <tr><td style="width:28%; font-weight:bold;">8.1 บริบทสำคัญของโรงเรียนที่ควรรับรู้</td><td id="p_s8_1"></td></tr>
     <tr><td style="font-weight:bold;">8.2 ข้อจำกัดสำคัญที่อาจส่งผลต่อการเรียนรู้</td><td id="p_s8_2"></td></tr>
     <tr><td style="font-weight:bold;">8.3 สิ่งที่ครูต้นทางควรคำนึงถึง</td><td id="p_s8_3"></td></tr>
     <tr><td style="font-weight:bold;">8.4 ข้อเสนอเบื้องต้นเพื่อสนับสนุนโรงเรียน</td><td id="p_s8_4"></td></tr>
   </table>
 
-  <div class="pdf-sig">
-    <div>
-      <p>ลงชื่อ..........................................................ผู้ให้ข้อมูล</p>
-      <p>( <span id="p_sig1_n"></span> )</p>
-      <p>ตำแหน่ง: <span id="p_sig1_p"></span></p>
-      <p>วันที่: <span id="p_sig1_d"></span></p>
-    </div>
-    <div>
-      <p>ลงชื่อ..........................................................ผู้รับข้อมูล / ผู้ประสานงาน</p>
-      <p>( <span id="p_sig2_n"></span> )</p>
-      <p>ตำแหน่ง: <span id="p_sig2_p"></span></p>
-      <p>วันที่: <span id="p_sig2_d"></span></p>
-    </div>
-  </div>
+  <table class="pdf-sig-table">
+    <tr>
+      <td>
+        <div>ลงชื่อ......................................................</div>
+        <div>( <span id="p_sig1_n"></span> )</div>
+        <div>ตำแหน่ง: <span id="p_sig1_p"></span></div>
+        <div>วันที่: <span id="p_sig1_d"></span></div>
+        <div style="font-size:11pt; color:#555;">ผู้ให้ข้อมูล</div>
+      </td>
+      <td>
+        <div>ลงชื่อ......................................................</div>
+        <div>( <span id="p_sig2_n"></span> )</div>
+        <div>ตำแหน่ง: <span id="p_sig2_p"></span></div>
+        <div>วันที่: <span id="p_sig2_d"></span></div>
+        <div style="font-size:11pt; color:#555;">ผู้รับข้อมูล / ผู้ประสานงาน</div>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <script>
@@ -1014,9 +1079,28 @@ async function submitForm() {
     const schoolName = getVal('sch_name') || 'โรงเรียนปลายทาง';
     document.getElementById('successSchoolName').textContent = schoolName;
     document.getElementById('successOverlay').classList.add('show');
+    // Reset form and go back to tab 0
+    resetForm();
   } catch (e) {
     statusEl.innerHTML = '<span style="color:red;">❌ เกิดข้อผิดพลาด: ' + e.message + '</span>';
   }
+}
+
+// Reset form to initial state and go to tab 0
+function resetForm() {
+  // Clear all text/number/date/email/tel inputs (except hidden)
+  document.querySelectorAll('#formModeView input[type=text], #formModeView input[type=number], #formModeView input[type=date], #formModeView input[type=email], #formModeView input[type=tel]').forEach(el => {
+    el.value = el.type === 'number' ? '0' : '';
+  });
+  // Clear all textareas
+  document.querySelectorAll('#formModeView textarea').forEach(el => el.value = '');
+  // Uncheck all checkboxes and radios
+  document.querySelectorAll('#formModeView input[type=checkbox], #formModeView input[type=radio]').forEach(el => el.checked = false);
+  // Reset submit status
+  const statusEl = document.getElementById('submitStatus');
+  if(statusEl) statusEl.innerHTML = '';
+  // Go back to tab 0
+  showTab(0);
 }
 
 // Fetch dashboard dataset
@@ -1207,30 +1291,64 @@ function showEditMode() {
   const body = document.getElementById('previewModalBody');
   document.getElementById('previewModalTitle').textContent = `✏️ แก้ไขข้อมูล: ${item.ชื่อโรงเรียน||''}`;
 
-  body.innerHTML = `
-    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#92400e;">
-      <strong>⚠️ หมายเหตุ:</strong> การแก้ไขนี้จะอัปเดตข้อมูลในระบบผ่าน Google Sheets โปรดตรวจสอบก่อนบันทึก
-    </div>
-    <div class="edit-grid">
-      <div class="edit-field field-full"><label>ชื่อโรงเรียน</label><input type="text" id="edit_sch_name" value="${item.ชื่อโรงเรียน||''}"></div>
-      <div class="edit-field"><label>รหัสโรงเรียน</label><input type="text" id="edit_sch_code" value="${item.รหัสโรงเรียน||''}"></div>
-      <div class="edit-field"><label>จังหวัด</label><input type="text" id="edit_province" value="${item.จังหวัด||''}"></div>
-      <div class="edit-field"><label>อำเภอ</label><input type="text" id="edit_amphoe" value="${item.อำเภอ||''}"></div>
-      <div class="edit-field"><label>สำนักงานเขตพื้นที่</label><input type="text" id="edit_area" value="${item.สำนักงานเขตพื้นที่||''}"></div>
-      <div class="edit-field"><label>ชื่อผู้ให้ข้อมูล</label><input type="text" id="edit_inf_name" value="${item.ผู้ให้ข้อมูล_ชื่อ||''}"></div>
-      <div class="edit-field"><label>ตำแหน่งผู้ให้ข้อมูล</label><input type="text" id="edit_inf_pos" value="${item.ผู้ให้ข้อมูล_ตำแหน่ง||''}"></div>
-      <div class="edit-field field-full"><label>บริบทสำคัญของโรงเรียน</label><textarea id="edit_s8_1" rows="3">${item.S8_บริบทสำคัญ||''}</textarea></div>
-      <div class="edit-field field-full"><label>ข้อจำกัดสำคัญ</label><textarea id="edit_s8_2" rows="3">${item.S8_ข้อจำกัดการเรียน||''}</textarea></div>
-      <div class="edit-field field-full"><label>สิ่งที่ครูต้นทางควรคำนึงถึง</label><textarea id="edit_s8_3" rows="3">${item.S8_ข้อควรคำนึงถึง||''}</textarea></div>
-      <div class="edit-field field-full"><label>ข้อเสนอแนะเบื้องต้น</label><textarea id="edit_s8_4" rows="3">${item.S8_ข้อเสนอแนะเบื้องต้น||''}</textarea></div>
-    </div>
-  `;
+  // Field group definitions — ใช้ key จริงจากข้อมูล
+  const groups = [
+    { label: '📍 ข้อมูลทั่วไปของโรงเรียน', keys: ['ชื่อโรงเรียน','รหัสโรงเรียน','สำนักงานเขตพื้นที่','ตำบล','อำเภอ','จังหวัด','รหัสไปรษณีย์','โทรศัพท์โรงเรียน','ประเภทโรงเรียน_รวม','ลักษณะชั้นเรียน_รวม','ลักษณะชั้นเรียน_รายละเอียดข้อจำกัด'] },
+    { label: '👤 ผู้ให้ข้อมูล', keys: ['ผู้ให้ข้อมูล_สถานะ','ผู้ให้ข้อมูล_ชื่อ','ผู้ให้ข้อมูล_ตำแหน่ง','ผู้ให้ข้อมูล_เบอร์โทร','ผู้ให้ข้อมูล_อีเมล','ผู้ให้ข้อมูล_วันที่บันทึก'] },
+    { label: '👥 บุคลากร', keys: ['ผอ_ครูใหญ่','จำนวนรองผอ','จำนวนครูทั้งหมด','จำนวนครูอัตราจ้าง','จำนวนธุรการ','ตารางครูตรงวิชาเอก_รวม'] },
+    { label: '📺 การใช้ DLTV', keys: ['ภาพรวมการใช้_รวม','ตารางวิชาการแยกชั้นปี_รวม','บทบาทครูปลายทาง_รวม','การเตรียมการก่อนใช้_รวม','การติดตามผลหลังเรียน_รวม','ช่องทางรับชม_รวม','รายละเอียดความต่างช่องทาง'] },
+    { label: '🖥️ อุปกรณ์และโครงสร้างพื้นฐาน', keys: ['ตารางอุปกรณ์ทีวีและกล่อง_รวม','ตารางโครงสร้างพื้นฐาน_รวม','แนวทางซ่อมบำรุงหลังประกัน'] },
+    { label: '🎓 บริบทผู้เรียนและจุดแข็ง', keys: ['ลักษณะผู้เรียน_รวม','ข้อจำกัดสำคัญ_รวม','ครูต้นทางควรรับรู้','จุดแข็งโรงเรียน','ปัญหาอุปสรรค','สิ่งที่โรงเรียนต้องการสนับสนุน'] },
+    { label: '📝 สรุปบริบทสำคัญ (หมวด 8)', keys: ['S8_บริบทสำคัญ','S8_ข้อจำกัดการเรียน','S8_ข้อควรคำนึงถึง','S8_ข้อเสนอแนะเบื้องต้น'] },
+    { label: '✍️ การลงนาม', keys: ['ลงนาม_ผู้ให้ข้อมูล','ลงนาม_ตำแหน่งผู้ให้','ลงนาม_วันที่ผู้ให้','ลงนาม_ผู้รับข้อมูล','ลงนาม_ตำแหน่งผู้รับ','ลงนาม_วันที่ผู้รับ'] },
+  ];
+
+  // Collect all keys already in groups
+  const groupedKeys = new Set(groups.flatMap(g => g.keys));
+
+  // Find any extra keys from actual data not in groups
+  const extraKeys = Object.keys(item).filter(k => !groupedKeys.has(k) && k !== 'rowIndex');
+  if(extraKeys.length) groups.push({ label: '📋 ข้อมูลอื่นๆ', keys: extraKeys });
+
+  // Textarea for long text fields
+  const longFields = new Set(['ลักษณะชั้นเรียน_รายละเอียดข้อจำกัด','ตารางครูตรงวิชาเอก_รวม','ภาพรวมการใช้_รวม','ตารางวิชาการแยกชั้นปี_รวม','บทบาทครูปลายทาง_รวม','การเตรียมการก่อนใช้_รวม','การติดตามผลหลังเรียน_รวม','รายละเอียดความต่างช่องทาง','ตารางอุปกรณ์ทีวีและกล่อง_รวม','ตารางโครงสร้างพื้นฐาน_รวม','ลักษณะผู้เรียน_รวม','ข้อจำกัดสำคัญ_รวม','ครูต้นทางควรรับรู้','จุดแข็งโรงเรียน','ปัญหาอุปสรรค','สิ่งที่โรงเรียนต้องการสนับสนุน','S8_บริบทสำคัญ','S8_ข้อจำกัดการเรียน','S8_ข้อควรคำนึงถึง','S8_ข้อเสนอแนะเบื้องต้น']);
+
+  let html = `<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#92400e;">
+    <strong>⚠️ หมายเหตุ:</strong> การแก้ไขนี้จะอัปเดตข้อมูลในระบบ โปรดตรวจสอบก่อนบันทึก
+  </div>`;
+
+  groups.forEach(group => {
+    // Only render group if at least one key has data or exists in item
+    const hasAny = group.keys.some(k => item.hasOwnProperty(k));
+    if(!hasAny) return;
+
+    html += `<div style="font-weight:700;color:var(--accent);font-size:14px;margin:16px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent-light);">${group.label}</div><div class="edit-grid">`;
+
+    group.keys.forEach(key => {
+      const val = (item[key] || '').toString().replace(/"/g, '&quot;').replace(/</g,'&lt;');
+      const safeid = 'ef_' + key.replace(/[^a-zA-Zก-ฮ0-9]/g, '_');
+      const isLong = longFields.has(key) || (item[key] && item[key].toString().length > 60);
+      const isHalf = !isLong;
+      const label = key.replace(/_รวม$/,'').replace(/_/g,' ');
+
+      if(isLong) {
+        html += `<div class="edit-field field-full" data-key="${key}"><label>${label}</label><textarea id="${safeid}" rows="3" style="font-size:13px;">${(item[key]||'').toString().replace(/</g,'&lt;')}</textarea></div>`;
+      } else {
+        html += `<div class="edit-field" data-key="${key}"><label>${label}</label><input type="text" id="${safeid}" value="${val}" style="font-size:13px;"></div>`;
+      }
+    });
+
+    html += `</div>`;
+  });
+
+  body.innerHTML = html;
 
   document.querySelector('.modal-footer').innerHTML = `
-    <button style="background:#f1f5f9;color:#64748b;border:none;padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;" onclick="openPreviewModal(currentPreviewIndex)">ยกเลิก</button>
+    <button style="background:#f1f5f9;color:#64748b;border:none;padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;font-family:'Sarabun',sans-serif;" onclick="openPreviewModal(currentPreviewIndex)">ยกเลิก</button>
     <button class="btn-modal-edit" onclick="saveEditedData()"><i class="ti ti-device-floppy"></i> บันทึกการแก้ไข</button>
   `;
 }
+
 
 function openEditModal(index) {
   openPreviewModal(index);
@@ -1240,23 +1358,18 @@ function openEditModal(index) {
 async function saveEditedData() {
   if(currentPreviewIndex < 0) return;
   const item = allResponsesData[currentPreviewIndex];
-  
-  // Update local data
-  item.ชื่อโรงเรียน = document.getElementById('edit_sch_name').value;
-  item.รหัสโรงเรียน = document.getElementById('edit_sch_code').value;
-  item.จังหวัด = document.getElementById('edit_province').value;
-  item.อำเภอ = document.getElementById('edit_amphoe').value;
-  item.สำนักงานเขตพื้นที่ = document.getElementById('edit_area').value;
-  item.ผู้ให้ข้อมูล_ชื่อ = document.getElementById('edit_inf_name').value;
-  item.ผู้ให้ข้อมูล_ตำแหน่ง = document.getElementById('edit_inf_pos').value;
-  item.S8_บริบทสำคัญ = document.getElementById('edit_s8_1').value;
-  item.S8_ข้อจำกัดการเรียน = document.getElementById('edit_s8_2').value;
-  item.S8_ข้อควรคำนึงถึง = document.getElementById('edit_s8_3').value;
-  item.S8_ข้อเสนอแนะเบื้องต้น = document.getElementById('edit_s8_4').value;
 
-  // Send update to GS (if rowIndex available)
-  const url = getVal('gsUrl');
-  if(url && url !== 'YOUR_GS_URL_HERE' && item.rowIndex) {
+  // อ่านค่าจากทุก field ที่สร้างด้วย data-key อัตโนมัติ
+  document.querySelectorAll('#previewModalBody [data-key]').forEach(wrapper => {
+    const key = wrapper.getAttribute('data-key');
+    const input = wrapper.querySelector('input, textarea');
+    if(input && key) item[key] = input.value;
+  });
+
+  // Send update to GS if available
+  const urlEl = document.getElementById('gsUrl');
+  const url = (urlEl ? urlEl.value.trim() : '') || localStorage.getItem('dl_gs_url') || '';
+  if(url && item.rowIndex) {
     try {
       await fetch(url, {
         method: 'POST',
@@ -1269,22 +1382,20 @@ async function saveEditedData() {
 
   renderDashboardTable(allResponsesData);
   closePreviewModal();
-  
-  // Show mini success notice
+
   const notice = document.createElement('div');
-  notice.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#15803d;color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;z-index:9999;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+  notice.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#15803d;color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;z-index:9999;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.2);font-family:Sarabun,sans-serif;';
   notice.textContent = '✓ บันทึกการแก้ไขเรียบร้อยแล้ว';
   document.body.appendChild(notice);
   setTimeout(() => notice.remove(), 3000);
 }
-
 // Close modals on overlay click
 document.addEventListener('click', function(e) {
   if(e.target.id === 'successOverlay') closeSuccessPopup();
   if(e.target.id === 'previewModal') closePreviewModal();
 });
 
-function downloadSinglePDF(index) {
+async function downloadSinglePDF(index) {
   const item = allResponsesData[index];
   if(!item) return;
 
@@ -1324,7 +1435,20 @@ function downloadSinglePDF(index) {
     });
   } else { mjDiv.innerHTML = '-'; }
 
-  document.getElementById('p_usage_styles').innerText = item.ภาพรวมการใช้_รวม || '-';
+  // Helper: render comma-separated values as bullet list HTML
+  function toValHtml(str) {
+    if (!str) return '-';
+    // If contains ", " split into bullets for readability
+    const parts = str.split(', ').map(s => s.trim()).filter(Boolean);
+    if (parts.length <= 1) return str;
+    return parts.map(p => `• ${p}`).join('<br>');
+  }
+  // Helper: escape plain text safely
+  function safeText(str) {
+    return (str || '-').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  document.getElementById('p_usage_styles').innerHTML = toValHtml(item.ภาพรวมการใช้_รวม);
 
   // Academic Flatten Table
   const acDiv = document.getElementById('p_academic_list');
@@ -1335,12 +1459,12 @@ function downloadSinglePDF(index) {
     });
   } else { acDiv.innerHTML = '-'; }
 
-  document.getElementById('p_teacher_roles').innerText = item.บทบาทครูปลายทาง_รวม || '-';
-  document.getElementById('p_prep_styles').innerText = item.การเตรียมการก่อนใช้_รวม || '-';
-  document.getElementById('p_follow_styles').innerText = item.การติดตามผลหลังเรียน_รวม || '-';
+  document.getElementById('p_teacher_roles').innerHTML = toValHtml(item.บทบาทครูปลายทาง_รวม);
+  document.getElementById('p_prep_styles').innerHTML = toValHtml(item.การเตรียมการก่อนใช้_รวม);
+  document.getElementById('p_follow_styles').innerHTML = toValHtml(item.การติดตามผลหลังเรียน_รวม);
   
-  document.getElementById('p_watch_channels').innerText = item.ช่องทางรับชม_รวม || '-';
-  document.getElementById('p_watch_diff').innerText = item.รายละเอียดความต่างช่องทาง || '-';
+  document.getElementById('p_watch_channels').innerHTML = toValHtml(item.ช่องทางรับชม_รวม);
+  document.getElementById('p_watch_diff').innerHTML = safeText(item.รายละเอียดความต่างช่องทาง);
 
   // Hardware Grid Mapping
   const hwDiv = document.getElementById('p_hw_list');
@@ -1356,23 +1480,24 @@ function downloadSinglePDF(index) {
   infDiv.innerHTML = '';
   if(item.ตารางโครงสร้างพื้นฐาน_รวม) {
     item.ตารางโครงสร้างพื้นฐาน_รวม.split(' | ').forEach(token => {
-      infDiv.innerHTML += `<span style="display:inline-block; margin-right:15px;">• ${token}</span>`;
+      infDiv.innerHTML += `<div style="margin-bottom:2px;">• ${token}</div>`;
     });
   } else { infDiv.innerHTML = '-'; }
 
-  document.getElementById('p_maint_style').innerText = item.แนวทางซ่อมบำรุงหลังประกัน || '-';
-  document.getElementById('p_std_context').innerText = item.ลักษณะผู้เรียน_รวม || '-';
-  document.getElementById('p_limit_factors').innerText = item.ข้อจำกัดสำคัญ_รวม || '-';
-  document.getElementById('p_tch_know').innerText = item.ครูต้นทางควรรับรู้ || '-';
-  document.getElementById('p_strength').innerText = item.จุดแข็งโรงเรียน || '-';
-  document.getElementById('p_problem').innerText = item.ปัญหาอุปสรรค || '-';
-  document.getElementById('p_sup_needs').innerText = item.สิ่งที่โรงเรียนต้องการสนับสนุน || '-';
+  document.getElementById('p_maint_style').innerHTML = safeText(item.แนวทางซ่อมบำรุงหลังประกัน);
+  document.getElementById('p_std_context').innerHTML = toValHtml(item.ลักษณะผู้เรียน_รวม);
+  document.getElementById('p_limit_factors').innerHTML = toValHtml(item.ข้อจำกัดสำคัญ_รวม);
+  document.getElementById('p_tch_know').innerHTML = safeText(item.ครูต้นทางควรรับรู้);
+  document.getElementById('p_strength').innerHTML = safeText(item.จุดแข็งโรงเรียน);
+  document.getElementById('p_problem').innerHTML = safeText(item.ปัญหาอุปสรรค);
+  document.getElementById('p_sup_needs').innerHTML = toValHtml(item.สิ่งที่โรงเรียนต้องการสนับสนุน);
 
   // Section 8 Mapping with line breaks conversion
-  document.getElementById('p_s8_1').innerText = item.S8_บริบทสำคัญ || '-';
-  document.getElementById('p_s8_2').innerText = item.S8_ข้อจำกัดการเรียน || '-';
-  document.getElementById('p_s8_3').innerText = item.S8_ข้อควรคำนึงถึง || '-';
-  document.getElementById('p_s8_4').innerText = item.S8_ข้อเสนอแนะเบื้องต้น || '-';
+  function nl2br(str) { return safeText(str || '-').replace(/\n/g, '<br>'); }
+  document.getElementById('p_s8_1').innerHTML = nl2br(item.S8_บริบทสำคัญ);
+  document.getElementById('p_s8_2').innerHTML = nl2br(item.S8_ข้อจำกัดการเรียน);
+  document.getElementById('p_s8_3').innerHTML = nl2br(item.S8_ข้อควรคำนึงถึง);
+  document.getElementById('p_s8_4').innerHTML = nl2br(item.S8_ข้อเสนอแนะเบื้องต้น);
 
   document.getElementById('p_sig1_n').innerText = item.ลงนาม_ผู้ให้ข้อมูล || '................................................';
   document.getElementById('p_sig1_p').innerText = item.ลงนาม_ตำแหน่งผู้ให้ || '-';
@@ -1385,12 +1510,25 @@ function downloadSinglePDF(index) {
   const element = document.getElementById('pdf-print-area');
   element.style.display = 'block';
 
+  // Wait for fonts to render before capturing
+  await document.fonts.ready;
+
   const opt = {
     margin:       [10, 10, 10, 10],
     filename:     `บริบทDLTV_${item.ชื่อโรงเรียน || 'โรงเรียนปลายทาง'}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    html2canvas:  {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      letterRendering: true,
+      allowTaint: true,
+      windowWidth: element.scrollWidth,
+      onclone: function(doc) {
+        doc.getElementById('pdf-print-area').style.display = 'block';
+      }
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
   html2pdf().set(opt).from(element).save().then(() => {
